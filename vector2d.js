@@ -79,7 +79,24 @@ vehicle.createNewVector = function( )
 	this.object.setWidth( vehicle.values.width );
 }
 
-vehicle.drawShape = function( )
+vehicle.animate = function( )
+{
+	    // shim layer with setTimeout fallback
+	window.requestAnimFrame = ( function( )
+	{
+  		return  window.requestAnimationFrame       || 
+		  window.webkitRequestAnimationFrame || 
+		  window.mozRequestAnimationFrame    || 
+		  window.oRequestAnimationFrame      || 
+		  window.msRequestAnimationFrame     || 
+		  function( vehicle.draw )
+		  {
+			window.setTimeout( vehicle.draw, 1000 / 60 );
+		  };
+    } )( );
+}
+
+vehicle.draw = function( )
 {
 	// Make sure we don't execute when canvas isn't supported
 	if ( this.canvas.getContext )
@@ -124,7 +141,7 @@ vehicle.initialize = function( )
 {
 	vehicle.setup( );
 	vehicle.createNewVector( );
-	vehicle.drawShape( );
+	// vehicle.animate( );
 }
 
 
