@@ -130,6 +130,13 @@ Function.method( 'bind', function( object )
 	};
 } );
 
+vehicle.buttons = [];
+
+vehicle.position = {
+	x : 200,
+	y : 300
+};
+
 vehicle.setup = function( )
 {
 	console.log( "Vehicle.initialize( )" );
@@ -140,25 +147,31 @@ vehicle.setup = function( )
 	// create and store reference to button
 	// then create event handler
 	var button = document.getElementById( 'spawn' );
-	button.addEventListener( "click", vehicle.onButtonClick );
+	vehicle.buttons.push( button );
+
+	button.addEventListener( "click", vehicle.onButtonClick( ) );
 }
 
 // handle button click event
 vehicle.onButtonClick = function( )
-{
-	return button;
-}.bind( { button : vehicle.onButtonClickHandler } );
+{	
+	vehicle.onButtonClickHandler( );
+	/*this.value = vehicle.string;
 	
+	return this.vsalue;*/
+}
+// .bind( { value : vehicle.onButtonClickHandler( ) } );
+
 vehicle.onButtonClickHandler = function( )
 {
-	console.log( 'new vehicle added' );
+	console.log( 'new fish added' );
+	vehicle.addNewVehicle( vehicle.position.x, vehicle.position.y );
+	vehicle.createNewVector( );
 }
 
 // add new vehicle and set attributes
-vehicle.addNewVehicle = function( width, height, x, y )
+vehicle.addNewVehicle = function( x, y )
 {
-	vehicle.values.setWidth( width );
-	vehicle.values.setHeight( height );
 	vehicle.values.setX( x );
 	vehicle.values.setY( y );
 }
@@ -266,7 +279,7 @@ vehicle.draw = function( )
 vehicle.initialize = function( )
 {
 	vehicle.setup( );
-	vehicle.addNewVehicle( 100, 100, 100, 100 );
+	vehicle.addNewVehicle( 50, 100 );
 	vehicle.createNewVector( );
 	vehicle.animate( );
 }
@@ -279,5 +292,5 @@ if ( document.addEventListener )
 }
 else if ( document.attachEvent )
 {  
-  document.attachEvent( "onload", vehicle.initialize( ) );  
+	document.attachEvent( "onload", vehicle.initialize( ) );  
 }
